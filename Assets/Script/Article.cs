@@ -9,6 +9,7 @@ public enum ArticleType
     Notice,
 
 }
+[Serializable]
 public class Article
 {
     public ArticleType ArticleType;
@@ -18,4 +19,14 @@ public class Article
     public int Like;
     public DateTime WriteTime;
 
+}
+[Serializable]
+
+public class ArticleData
+{
+    public List<Article> Data;
+    public ArticleData(List<Article> data)
+    {
+        Data = data;
+    }
 }
