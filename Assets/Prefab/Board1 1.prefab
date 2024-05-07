@@ -963,6 +963,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5218472327016585986}
+  - component: {fileID: 88263677453921122}
   m_Layer: 5
   m_Name: Board1 1
   m_TagString: Untagged
@@ -1003,6 +1004,23 @@ RectTransform:
   m_AnchoredPosition: {x: -0.40000153, y: -45}
   m_SizeDelta: {x: 614.81555, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &88263677453921122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4430327491139422254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9c86d1a9383056469167bf652074ac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ProfileImageUI: {fileID: 6579988176722201708}
+  NameTextUI: {fileID: 3621120323434976392}
+  ContentTextUI: {fileID: 7197096670901710724}
+  LikeTextUI: {fileID: 6139876830168460157}
+  WriteTimeUI: {fileID: 630041562273584293}
 --- !u!1 &4887815657895365846
 GameObject:
   m_ObjectHideFlags: 0
