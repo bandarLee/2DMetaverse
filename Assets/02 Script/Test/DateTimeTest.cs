@@ -20,6 +20,31 @@ public class DateTimeTest : MonoBehaviour
         DateTime lastWeek = DateTime.Today.AddDays(-7);
         Debug.Log(lastWeek);
 
+        Debug.Log(tomorrow.Year);
+        Debug.Log(tomorrow.Month);
+        Debug.Log(tomorrow.Day);
+        Debug.Log(tomorrow.Hour);
+            
+        Debug.Log(tomorrow.Minute);
+        Debug.Log(tomorrow.Second);
+        Debug.Log(tomorrow.DayOfWeek);
+
+        DateTime person1Birth = new DateTime(2000, 1, 1);
+        DateTime person2Birth = new DateTime(2002, 5, 31);
+        Debug.Log(person1Birth > person2Birth);
+        Debug.Log($"{today.Year}년{today.Month}월{today.Day}일은 {tomorrow.DayOfWeek}임.");
+
+        Debug.Log(today.ToString("yyyy년 MM월dd일 임. ddd이다"));
+        Debug.Log(today.ToString("yyyy/MM/dd/ddd"));
+
+        DateTime now2 = DateTime.Now;
+        Debug.Log(now2);
+        Debug.Log(now2.Kind);
+
+        DateTime utcNow = DateTime.UtcNow;
+        Debug.Log(utcNow);
+        Debug.Log(utcNow.Kind);
+
     }
 
 
