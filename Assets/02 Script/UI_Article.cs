@@ -5,24 +5,40 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 using static UnityEngine.ParticleSystem;
 
 public class UI_Article : MonoBehaviour
 {
-    public Image ProfileImageUI;
+    public RawImage ProfileImageUI;
     public TextMeshProUGUI NameTextUI;
     public TextMeshProUGUI ContentTextUI;
     public TextMeshProUGUI LikeTextUI;
     public TextMeshProUGUI WriteTimeUI;
-    public ObjectId articleid;
+    public Article ThisArticle;
+    private  Dictionary<string, Texture> textureCache = new Dictionary<string, Texture>();
+
     public void Init(Article article)
     {
+
         NameTextUI.text = article.Name;
         ContentTextUI.text = article.Content;
         LikeTextUI.text = $"좋아요 {article.Like}";
         WriteTimeUI.text = GetTimeString(article.WriteTime.ToLocalTime());
-        articleid = article.Id;
+        ThisArticle = article;
+        if(article.ProfileImage!= null)
+        {
+            StartCoroutine(GetTexture(article.ProfileImage));
+
+        }
+        else
+        {
+            StartCoroutine(GetTexture("http://localhost:8080/Base.png"));
+
+        }
+
+
     }
     private string GetTimeString(DateTime dateTime)
     {
@@ -49,6 +65,29 @@ public class UI_Article : MonoBehaviour
                 return dateTime.ToString("yyyy년 MM월 dd일");
 
 
+        }
+    }
+    IEnumerator GetTexture(string imageURL)
+    {
+        if (textureCache.TryGetValue(imageURL, out Texture cachedTexture))
+        {
+            ProfileImageUI.texture = cachedTexture;
+            Debug.Log("캐싱");
+            yield break; 
+        }
+
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture(imageURL);
+        yield return www.SendWebRequest();
+
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            Texture downloadedTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+            textureCache[imageURL] = downloadedTexture;
+            ProfileImageUI.texture = downloadedTexture;
         }
     }
 }

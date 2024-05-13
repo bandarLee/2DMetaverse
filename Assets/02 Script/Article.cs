@@ -22,6 +22,7 @@ public class Article
     public string Content;
     public int Like;
     public DateTime WriteTime;
+    public string ProfileImage;
 
 }
 [Serializable]

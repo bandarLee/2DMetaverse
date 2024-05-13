@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 using TMPro;
 using System.Collections.ObjectModel;
+using Unity.Mathematics;
 
 public class ArticleManager : MonoBehaviour
 {
@@ -23,6 +24,9 @@ public class ArticleManager : MonoBehaviour
 
     public TMP_InputField ContentInput;
     public Toggle NoticeToggle;
+
+    public Toggle NoticeToggle_Modify;
+    public TMP_InputField ContentInput_Modify;
 
     private string author = "이태환";
     private string title = "제목없음";
@@ -101,17 +105,31 @@ public class ArticleManager : MonoBehaviour
         LoadAllArticles();
 
     }
-    /*public void LoadFromDocument(BsonDocument doc,Article newArticle)
+    public void InsertArticle(Article article)
     {
+        NoticeToggle_Modify.isOn = (article.ArticleType == ArticleType.Notice);
+        ContentInput_Modify.text = article.Content;
 
-        newArticle.ArticleType = (ArticleType)doc["ArticleType"].AsInt32;
+    }
+    public void CompleteModifyArticle(Article article)
+    {
+        Article ModifiedArticle = _articlesCollection.Find(d => d.Id == article.Id).First();
+        ModifiedArticle.Content = ContentInput_Modify.text;
+        ArticleType modifiedType = NoticeToggle_Modify.isOn ? ArticleType.Notice : ArticleType.Normal;
+        ModifiedArticle.ArticleType = modifiedType;
+        var result2 = _articlesCollection.ReplaceOne(d => d.Id == article.Id, ModifiedArticle);
+        UI_ArticleModify.Instance.ArticleModifyUI.SetActive(false);
+        LoadAllArticles();
 
-        newArticle.Name = doc.GetValue("Name", string.Empty).AsString;
-        newArticle.Title = doc.GetValue("Title", string.Empty).AsString;
-        newArticle.Content = doc.GetValue("Content", string.Empty).AsString;
-        newArticle.Like = doc.GetValue("Like", 0).AsInt32;
-        newArticle.WriteTime = DateTime.Parse(doc["WriteTime"].AsString);
 
+    }
+    public void ModifyHeart(Article article , int A)
+    {
+        var filter = Builders<Article>.Filter.Eq("_id",article.Id);
+        var updateDef = Builders<Article>.Update.Inc("Like", A);
+        _articlesCollection.UpdateOne(filter, updateDef);
+        LoadAllArticles();
+    }
 
-    }*/
+  
 }
