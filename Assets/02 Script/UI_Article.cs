@@ -79,15 +79,10 @@ public class UI_Article : MonoBehaviour
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(imageURL);
         yield return www.SendWebRequest();
 
-        if (www.isNetworkError || www.isHttpError)
-        {
-            Debug.Log(www.error);
-        }
-        else
-        {
+      
             Texture downloadedTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
             textureCache[imageURL] = downloadedTexture;
             ProfileImageUI.texture = downloadedTexture;
-        }
+        
     }
 }

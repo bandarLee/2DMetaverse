@@ -7,7 +7,7 @@ using UnityEngine;
 [System.Serializable]
 public class MyTextData
 {
-        public string Name;
+    public string Name;
 
     public int Age;
     public string[] Hobby;

@@ -32,6 +32,8 @@ public class ArticleManager : MonoBehaviour
     private string title = "제목없음";
     private string content;
     private int like = 0;
+
+    public GameObject Map;
     private void Awake()
     {
         if (Instance == null)
@@ -56,6 +58,8 @@ public class ArticleManager : MonoBehaviour
 
     public void LoadAllArticles()
     {
+        Map.SetActive(false);
+
         var filterNotice = Builders<BsonDocument>.Filter.Gte("ArticleType", 0);
         //writetime 을 기준으로 정렬
         var sort = new BsonDocument();
@@ -71,13 +75,20 @@ public class ArticleManager : MonoBehaviour
     }
     public void LoadNoticeArticles()
     {
-/*        var filterNotice = Builders<BsonDocument>.Filter.Eq("ArticleType", 1);
-*/
+        /*        var filterNotice = Builders<BsonDocument>.Filter.Eq("ArticleType", 1);
+         *        
+        */
+        Map.SetActive(false);
+
         _articles = _articlesCollection.Find(data => (int)data.ArticleType == (int)ArticleType.Notice).ToList();
 /*        _articles = ConvertDocumentsToArticles(articles);
 */        uI_ArticleList.Refresh();
         
 
+    }
+    public void LoadMap()
+    {
+        Map.SetActive(true);
     }
     public void WriteArticle()
     {
